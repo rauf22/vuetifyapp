@@ -2,17 +2,31 @@
 	<v-container>
 		<v-layout row>
 			<v-flex xs12>
-				<h1>Ad</h1>
+				<v-card-media
+					:src="ad.imageSrc"
+					height="300px"
+				></v-card-media>
+				<v-card-text>
+					<h1 class="text--primary"> {{ ad.title }} </h1>
+					<p> {{ad.description}} </p>
+				</v-card-text>
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn class="warning" flat>Edit</v-btn>
+					<v-btn class="success">Buy</v-btn>
+				</v-card-actions>
 			</v-flex>
 		</v-layout>
 	</v-container>
 </template>
 <script>
 	export default {
-		data () {
-			return {
-				
-			}
+		props: ['id'],
+		computed: {
+			ad () {
+				const id = this.id
+				return this.$store.getters.adById(id)
+			}	
 		}
 	}
 </script>

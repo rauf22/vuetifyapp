@@ -2,9 +2,11 @@ import Vue from 'vue'
 import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
+import BuyModalComponent from './components/Shared/BuyModal'
 import * as fb from 'firebase'
 import store from './store'
 
+Vue.component('app-buy-modal', BuyModalComponent)
 Vue.config.productionTip = false
 
 new Vue({
@@ -21,5 +23,12 @@ new Vue({
       messagingSenderId: '801510639075',
       appId: '1:801510639075:web:d148ba2cbe7dd80d'
     })
+    fb.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.$store.dispatch('autoLoginUser', user)
+      }
+    })
+
+    this.$store.dispatch('fetchAds')
   }
 }).$mount('#app')
